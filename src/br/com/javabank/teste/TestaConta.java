@@ -60,6 +60,6 @@ public class TestaConta {
         c4.sacar(100);
         System.out.println("Saldo DEPOIS do saque [c4]: " + c4.saldo);
 
-        JOptionPane.showMessageDialog(null, "Seu saldo final: " + c4.saldo);
+        //JOptionPane.showMessageDialog(null, "Seu saldo final: " + c4.saldo);
     }
 }
