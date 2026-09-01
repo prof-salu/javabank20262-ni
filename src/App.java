@@ -32,7 +32,7 @@ public class App {
 
             do {
                 System.out.println("--- OPERAÇÕES DO TERMINAL ---");
-                System.out.println("1 - Criar/Abrir Conta de Cliente");
+                System.out.println("1 - Criar/Abrir br.com.javabank.modelo.Conta de Cliente");
                 System.out.println("2 - Consultar Saldo");
                 System.out.println("3 - Realizar Depósito");
                 System.out.println("4 - Realizar Saque");
@@ -59,19 +59,18 @@ public class App {
                             saldo = Double.parseDouble(entrada.nextLine());
                         }
 
-                        System.out.println("Conta criado com sucesso!");
+                        System.out.println("br.com.javabank.modelo.Conta criado com sucesso!");
                         contaAtiva = true;
                     }
                     case 2 -> {
                         System.out.println("*** Consulta de saldo ***");
                         if (contaAtiva == true) {
-                            //System.out.println("Conta: " + numeroConta +
+                            //System.out.println("br.com.javabank.modelo.Conta: " + numeroConta +
                             //                   " | Titular: " + titular +
                             //                   " | Saldo: R$ " + saldo);
 
-                            System.out.printf("Conta: %d | Titular: %s | Saldo: R$ %.2f\n",
-                                    numeroConta, titular, saldo);
-
+                            System.out.printf("br.com.javabank.modelo.Conta: %d | Titular: %s | Saldo: R$ %.2f\n",
+                                                numeroConta, titular, saldo);
                         } else {
                             System.out.println("Nenhuma conta ativa.");
                         }
