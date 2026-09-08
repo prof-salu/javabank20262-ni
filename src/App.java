@@ -1,3 +1,5 @@
+import br.com.javabank.modelo.Conta;
+
 import java.util.Scanner;
 
 public class App {
@@ -25,14 +27,12 @@ public class App {
             System.out.println("[Bloqueado] Usuário bloqueado.");
         } else {
             int opcao = 0;
-            int numeroConta = 0;
-            String titular = "";
-            double saldo = 0;
-            boolean contaAtiva = false;
+            Conta c1 = new Conta(1001, "Juca Pereira", 5000);
+            Conta c2 = new Conta(1002, "Carlos", 1000);
 
             do {
                 System.out.println("--- OPERAÇÕES DO TERMINAL ---");
-                System.out.println("1 - Criar/Abrir br.com.javabank.modelo.Conta de Cliente");
+                System.out.println("1 - Criar/Abrir Conta de Cliente");
                 System.out.println("2 - Consultar Saldo");
                 System.out.println("3 - Realizar Depósito");
                 System.out.println("4 - Realizar Saque");
@@ -46,12 +46,12 @@ public class App {
                     case 1 -> {
                         System.out.println("*** Abertura de contas ***");
                         System.out.print("Informe o numero da nova conta: ");
-                        numeroConta = Integer.parseInt(entrada.nextLine());
+                        int numero = Integer.parseInt(entrada.nextLine());
                         System.out.print("Informe o nome do titular: ");
-                        titular = entrada.nextLine();
+                        String titular = entrada.nextLine();
 
                         System.out.print("Informe o saldo da conta: ");
-                        saldo = Double.parseDouble(entrada.nextLine());
+                        double saldo = Double.parseDouble(entrada.nextLine());
 
                         while (saldo < 0) {
                             System.out.println("O saldo deve ser maior ou igual a ZERO!");
@@ -59,18 +59,14 @@ public class App {
                             saldo = Double.parseDouble(entrada.nextLine());
                         }
 
-                        System.out.println("br.com.javabank.modelo.Conta criado com sucesso!");
-                        contaAtiva = true;
+                        System.out.println("Conta criado com sucesso!");
+                        c1 = new Conta(numero, titular, saldo);
                     }
                     case 2 -> {
                         System.out.println("*** Consulta de saldo ***");
-                        if (contaAtiva == true) {
-                            //System.out.println("br.com.javabank.modelo.Conta: " + numeroConta +
-                            //                   " | Titular: " + titular +
-                            //                   " | Saldo: R$ " + saldo);
-
-                            System.out.printf("br.com.javabank.modelo.Conta: %d | Titular: %s | Saldo: R$ %.2f\n",
-                                                numeroConta, titular, saldo);
+                        if (c1.estaAtiva() == true) {
+                            System.out.printf("Conta: %d | Titular: %s | Saldo: R$ %.2f\n",
+                                                c1.getNumero(), c1.getTitular(), c1.getSaldo());
                         } else {
                             System.out.println("Nenhuma conta ativa.");
                         }
@@ -85,8 +81,7 @@ public class App {
                             System.out.print("Informe o valor do deposito: ");
                             valor = Double.parseDouble(entrada.nextLine());
                         }
-                        //saldo = saldo + valor;
-                        saldo += valor;
+                        c1.depositar(valor);
                         System.out.println("Depositio efetuado com sucesso!");
                     }
                     case 4 -> {
@@ -99,11 +94,27 @@ public class App {
                             System.out.print("Informe o valor do saque: ");
                             valor = Double.parseDouble(entrada.nextLine());
                         }
-                        saldo -= valor;
+                        c1.sacar(valor);
                         System.out.println("Saque efetuado com sucesso!");
                     }
                     case 5 -> {
                         System.out.println("*** Efetuar Transferência ***");
+                        System.out.print("Informe o numero da conta: ");
+                        int numConta = Integer.parseInt(entrada.nextLine());
+                        double valor = 0;
+
+                        if(numConta == c2.getNumero() && c2.estaAtiva() == true){
+                            do{
+                                System.out.print("Informe o valor da transferencia: ");
+                                valor = Double.parseDouble(entrada.nextLine());
+                            }while(valor <= 0);
+                        }
+
+                        if(c1.transferencia(valor, c2) == true){
+                            System.out.println("Transferencia efetuado com sucesso!");
+                        }else{
+                            System.out.println("Saldo insuficiente.");
+                        }
                     }
                     case 6 -> {
                         System.out.println("[Deslogado] Fechando o caixa");
