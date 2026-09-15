@@ -2,15 +2,15 @@ package br.com.javabank.modelo;
 
 public class Conta {
     //Modificadores de acesso
-        //default --> classes do mesmo pacote tem acesso aos membros
-        //public --> todas as classes do projeto tem acesso aos membros
-        //private --> apenas a propria classe tem acesso aos membros
-        //protected --> apenas classes filhas e do mesmo pacote tem acesso aos membros
+        //(~) default --> classes do mesmo pacote tem acesso aos membros
+        //(+) public --> todas as classes do projeto tem acesso aos membros
+        //(-) private --> apenas a propria classe tem acesso aos membros
+        //(#) protected --> apenas classes filhas e do mesmo pacote tem acesso aos membros
 
     //Atributos (propriedades)
     private int numero;
     private String titular;
-    private double saldo;
+    protected double saldo;
     private boolean estaAtiva;
 
     //Construtor --> Possui o mesmo nome da classe, deve ser publico (quase sempre) e pode possuir parâmetros
