@@ -1,6 +1,6 @@
 package br.com.javabank.modelo;
 
-public class Corrente extends Conta{
+public class Corrente extends Conta implements Tributavel{
     private double limite;
 
     public Corrente(int numero, String titular,
@@ -30,5 +30,23 @@ public class Corrente extends Conta{
         }else{
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format("| Limite: R$ %.2f | Saldo total: R$ %.2f",
+                                                limite, getSaldo() + limite);
+    }
+
+    //ERRO (final), método não pode ser reescrito
+    //public boolean transferencia(double valor, Conta favorecido){
+      //  return true;
+    //}
+
+
+    @Override
+    public double getValorImposto() {
+        //2% do saldo atual da conta
+        return getSaldo() * 0.02;
     }
 }

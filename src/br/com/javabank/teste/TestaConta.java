@@ -1,16 +1,18 @@
 package br.com.javabank.teste;
 
 import br.com.javabank.modelo.Conta;
+import br.com.javabank.modelo.Corrente;
+import br.com.javabank.modelo.Poupanca;
 
 import javax.swing.*;
 
 public class TestaConta {
     public static void main(String[] args) {
         //Instanciação --> operador new
-        Conta c1 = new Conta(1001, "juca", 1000, true); //nova instancia
-        Conta c2 = new Conta(1002, "Gisele", 2000, true); //nova instancia
+        Conta c1 = new Corrente(1001, "juca", 1000, 400); //nova instancia
+        Conta c2 = new Poupanca(1002, "Gisele", 2000, 1); //nova instancia
         Conta c3 = c1; // Aponta para o mesmo endereço de c1
-        Conta c4 = new Conta(1002, "Gisele", 2000, true); //nova instancia
+        Conta c4 = new Poupanca(1002, "Gisele", 2000, 1); //nova instancia
 
         //c1.numero = 1001;
         //c1.titular = "Juca";

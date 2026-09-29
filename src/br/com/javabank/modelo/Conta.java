@@ -1,23 +1,32 @@
 package br.com.javabank.modelo;
 
-public class Conta {
+import java.util.Objects;
+//Classes abstratas não podem ser instanciadas
+public abstract class Conta {
     //Modificadores de acesso
         //(~) default --> classes do mesmo pacote tem acesso aos membros
         //(+) public --> todas as classes do projeto tem acesso aos membros
         //(-) private --> apenas a propria classe tem acesso aos membros
         //(#) protected --> apenas classes filhas e do mesmo pacote tem acesso aos membros
 
+    //O modificador FINAL indica que não pode ser alterado
+    //Modificador FINAL aplicado em uma variavel, transforma em CONSTANTE
+    //Constantes (final) por convenção são escritos em CAIXA_ALTA
+    public static final String CODIGO_BANCO = "777";
+
     //Atributos (propriedades)
     private int numero;
     private String titular;
     protected double saldo;
     private boolean estaAtiva;
+    private static int totalContasCriadas = 0;
 
     //Construtor --> Possui o mesmo nome da classe, deve ser publico (quase sempre) e pode possuir parâmetros
     //Sobrecarga de contrutores --> Classes com mais de 1 contrutor.
 
     public Conta(){
         //Construtor default (vazio) ==> nao possui parametros
+        Conta.totalContasCriadas++;
     }
 
     public Conta(int numero, String titular, double saldo, boolean estaAtiva){
@@ -26,6 +35,7 @@ public class Conta {
         setTitular(titular);
         this.saldo = saldo;
         this.estaAtiva = estaAtiva;
+        Conta.totalContasCriadas++;
     }
 
     public Conta(int numero, String titular, double saldo){
@@ -79,24 +89,54 @@ public class Conta {
         }
     }
 
-    public boolean sacar(double valor){
-        // && ==> and
-        // || ==> or
-        //  ! ==> not
-        if(valor >= 0 && valor <= saldo){
-            saldo -= valor;
-            return true;
-        }else{
-            return false;
-        }
-    }
+    //Uma função abstrata deve ser reescrita por classe filha que não é abstrata
+    public abstract boolean sacar(double valor);
 
-    public boolean transferencia(double valor, Conta favorecido){
+    //O modificador FINAL aplicado a funções, indicam que a função não pode ser reescrita
+    public final boolean transferencia(double valor, Conta favorecido){
         if(sacar(valor) == true){
             favorecido.depositar(valor);
             return true;
         }else{
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        //Retorna a representação textual do objeto.
+        return String.format("Número: %d | Titular: %s | Saldo: R$ %.2f", numero, titular, saldo);
+    }
+
+    //Define o critério de igualdade lógica entre dois objetos.
+    @Override
+    public boolean equals(Object obj) {
+        //Verifica se a propria instancia esta se chamando
+        if (this == obj){
+            return true;
+        }
+        //Verifica se a instancia é nula ou não é um objeto do tipo Conta
+        if(obj == null || obj instanceof Conta == false){
+            return false;
+        }
+        //Converte o objeto para uma conta
+        Conta outro = (Conta) obj;
+
+        //Compara o número e o titular das contas
+        if(outro.getNumero() == numero && outro.getTitular().equals(titular)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.numero, this.titular);
+    }
+
+    // Método estático para consulta do totalizador global
+    public static int getTotalContasCriadas() {
+        return Conta.totalContasCriadas;
     }
 }
