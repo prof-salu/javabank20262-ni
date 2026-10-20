@@ -85,7 +85,8 @@ public abstract class Conta {
             saldo += valor;
             return true;
         }else{
-            return false;
+            //return false;
+            throw new ValorInvalidoException();
         }
     }
 
