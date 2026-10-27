@@ -80,7 +80,7 @@ public abstract class Conta {
     }
 
     //Comportamentos
-    public boolean depositar(double valor){
+    public synchronized boolean depositar(double valor){
         if(valor >= 0){
             saldo += valor;
             return true;
